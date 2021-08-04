@@ -3,7 +3,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 /**
- * Created by xuwei.luo on 2021/8/4.
+ * Created by 罗旭维 on 2021/8/4.
  */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
