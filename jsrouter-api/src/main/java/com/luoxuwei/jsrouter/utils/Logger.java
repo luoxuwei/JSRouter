@@ -32,6 +32,10 @@ public class Logger {
         }
     }
 
+    public static void info(String message) {
+        info(defaultTag, message);
+    }
+
     public static void info(String tag, String message) {
         if (isShowLog) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
@@ -39,11 +43,19 @@ public class Logger {
         }
     }
 
+    public static void warning(String message) {
+        warning(defaultTag, message);
+    }
+
     public static void warning(String tag, String message) {
         if (isShowLog) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
             Log.w(TextUtils.isEmpty(tag) ? defaultTag : tag, message + getExtInfo(stackTraceElement));
         }
+    }
+
+    public static void error(String message) {
+        error(defaultTag, message);
     }
 
     public static void error(String tag, String message) {
