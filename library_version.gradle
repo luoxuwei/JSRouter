@@ -40,16 +40,18 @@ deps.junit                  = "junit:junit:$versions.junit"
 
 
 def support = [:]
-support.annotations     = "com.android.support:support-annotations:$versions.support"
-support.appCompat       = "com.android.support:appcompat-v7:$versions.support"
-support.recyclerview    = "com.android.support:recyclerview-v7:$versions.support"
-support.cardview        = "com.android.support:cardview-v7:$versions.support"
-support.design          = "com.android.support:design:$versions.support"
-support.v4              = "com.android.support:support-v4:$versions.support"
-support.exifinterface   = "com.android.support:exifinterface:$versions.support"
-support.coreUtils       = "com.android.support:support-core-utils:$versions.support"
-support.constraint      = "com.android.support.constraint:constraint-layout:$versions.constraint"
-support.multidex        = "com.android.support:multidex:$versions.multidex"
+def supportLibVersion = '1.3.1'
+support.annotations     = "androidx.annotation:annotation:${supportLibVersion}"
+support.appCompat       = "androidx.appcompat:appcompat:1.3.1"
+support.recyclerview    = "androidx.recyclerview:recyclerview:${supportLibVersion}"
+support.cardview        = "androidx.cardview:cardview:${supportLibVersion}"
+support.design          = "com.google.android.material:material:1.4.0"
+support.palette         = "androidx.palette:palette:${supportLibVersion}"
+support.v4              = "androidx.legacy:legacy-support-v4:${supportLibVersion}"//"com.android.support:support-v4:$versions.support"
+support.exifinterface   = "androidx.exifinterface:exifinterface:${supportLibVersion}"//"com.android.support:exifinterface:$versions.support"
+support.coreUtils       = "androidx.legacy:legacy-support-core-utils:${supportLibVersion}"//"com.android.support:support-core-utils:$versions.support"
+support.constraint      = "androidx.constraintlayout:constraintlayout:2.0.4"//"com.android.support.constraint:constraint-layout:$versions.constraint"
+support.multidex        = "androidx.multidex:multidex:2.0.0"//"com.android.support:multidex:$versions.multidex"
 deps.support = support
 
 
