@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.luoxuwei.annotation.JSRoute;
 import com.luoxuwei.jsrouter.base.BaseJavaScriptInterface;
 import com.luoxuwei.jsrouter.base.DefaultJavaScriptInterface;
 import com.luoxuwei.jsrouter.template.IRouteGroup;
@@ -14,7 +13,6 @@ import com.luoxuwei.jsrouter.utils.Consts;
 import com.luoxuwei.jsrouter.utils.Logger;
 import com.luoxuwei.jsrouter.utils.PackageUtils;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
