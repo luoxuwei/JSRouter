@@ -24,7 +24,7 @@ public class JSRouter {
         try {
             Set<String> routerMap = ClassUtils.getClassByPackageName(application.getApplicationContext(), Consts.ROUTE_ROOT_PAKCAGE);
             for (String className : routerMap) {
-                if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SDK_NAME)) {
+                if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
                     IRouteRoot routeGroup = (IRouteRoot) Class.forName(className).getConstructor().newInstance();
                     routeGroup.loadInto(groupsIndex, pathIndex);
                 }
