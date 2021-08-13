@@ -2,3 +2,4 @@ rootProject.name = "JSRouter"
 include ':app'
 include ':jsrouter-annotation'
 include ':jsrouter-api'
+include ':jsrouter-compiler'

@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility buildVersions.sourceCompatibility
+    targetCompatibility buildVersions.targetCompatibility
+}
+
+dependencies {
+    implementation project(":jsrouter-annotation")
+
+    annotationProcessor deps.autoService
+    compileOnly deps.autoServiceAnnotations
+
+    implementation deps.javapoet
+
+    implementation deps.commonsLang
+    implementation deps.commonsCollections
+    implementation deps.fastjson
+}
