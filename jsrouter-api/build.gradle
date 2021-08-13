@@ -26,5 +26,5 @@ android {
 
 dependencies {
 
-    implementation project(":jsrouter-annotation")
+    api project(":jsrouter-annotation")
 }

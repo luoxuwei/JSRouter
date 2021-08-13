@@ -8,10 +8,10 @@ import java.util.Map;
 /**
  * Created by 罗旭维 on 2021/8/13.
  */
-public class JSRouter$$Root$$app implements IRouteRoot {
+public class JSRouter$$Root$$app1 implements IRouteRoot {
     @Override
     public void loadInto(Map<String, Class<? extends IRouteGroup>> atlas, Map<String, String> index) {
-        index.put("MyRoute", "app");
-        atlas.put("app", JSRouter$$Group$$app.class);
+        index.put("MyRoute", "app1");
+        atlas.put("app1", JSRouter$$Group$$app1.class);
     }
 }

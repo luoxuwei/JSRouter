@@ -69,7 +69,7 @@ public class JSRouter {
         Class<?> interfaceClass = routes.get(path);
         if (interfaceClass == null) {
             String group = pathIndex.get(path);
-            if (TextUtils.isEmpty(group)) {
+            if (!TextUtils.isEmpty(group)) {
                 try {
                     addRouteGroupDynamic(group);
                 } catch (Exception e) {

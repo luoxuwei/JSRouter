@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -10,9 +11,15 @@ android {
         applicationId "com.luoxuwei.jsrouter.demo"
         minSdkVersion buildVersions.minSdk
         targetSdkVersion buildVersions.targetSdk
-        versionCode 2
-        versionName "2.0"
+        versionCode 3
+        versionName "3.0"
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [JSROUTER_MODULE_NAME : project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -39,4 +46,5 @@ dependencies {
     implementation deps.support.constraint
     implementation deps.support.multidex
     implementation project(":jsrouter-api")
+    kapt project(":jsrouter-compiler")
 }
