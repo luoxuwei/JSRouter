@@ -15,5 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         JSRouter.init(application)
+        JSRouter.getInstance().navigation("MyRoute").onCall(this, null)
+        JSRouter.getInstance().navigation("xxx").onCall(this, null)
     }
 }

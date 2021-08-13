@@ -2,8 +2,11 @@ package com.luoxuwei.jsrouter;
 
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.luoxuwei.annotation.JSRoute;
+import com.luoxuwei.jsrouter.base.BaseJavaScriptInterface;
+import com.luoxuwei.jsrouter.base.DefaultJavaScriptInterface;
 import com.luoxuwei.jsrouter.template.IRouteGroup;
 import com.luoxuwei.jsrouter.template.IRouteRoot;
 import com.luoxuwei.jsrouter.utils.ClassUtils;
@@ -12,6 +15,7 @@ import com.luoxuwei.jsrouter.utils.Logger;
 import com.luoxuwei.jsrouter.utils.PackageUtils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -60,6 +64,41 @@ public class JSRouter {
             }
         } catch (Exception e) {
             throw new RuntimeException("JSRouter init logistics center exception! [" + e.getMessage() + "]");
+        }
+    }
+
+    public BaseJavaScriptInterface navigation(String path) {
+        Class<?> interfaceClass = routes.get(path);
+        if (interfaceClass == null) {
+            String group = pathIndex.get(path);
+            if (TextUtils.isEmpty(group)) {
+                try {
+                    addRouteGroupDynamic(group);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Logger.error("There is no route match the path [" + path + "]");
+            }
+
+            interfaceClass = routes.get(path);
+        }
+
+        if (interfaceClass != null) {
+            try {
+                return (BaseJavaScriptInterface) interfaceClass.getConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new DefaultJavaScriptInterface();
+    }
+
+    public void addRouteGroupDynamic(String group) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if (groupsIndex.containsKey(group)) {
+            groupsIndex.get(group).getConstructor().newInstance().loadInto(routes);
+            groupsIndex.remove(group);
         }
     }
 

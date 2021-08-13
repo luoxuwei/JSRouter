@@ -1,5 +1,8 @@
 package com.luoxuwei.jsrouter.demo;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import com.luoxuwei.jsrouter.base.BaseJavaScriptInterface;
 
 import org.json.JSONObject;
@@ -9,7 +12,7 @@ import org.json.JSONObject;
  */
 public class MyRoute extends BaseJavaScriptInterface {
     @Override
-    public void onCall(JSONObject param) {
-
+    public void onCall(Activity activity, JSONObject param) {
+        Toast.makeText(activity, "MyRoute", Toast.LENGTH_SHORT).show();
     }
 }
