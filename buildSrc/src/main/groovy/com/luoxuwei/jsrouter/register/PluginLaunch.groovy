@@ -20,7 +20,8 @@ public class PluginLaunch implements Plugin<Project> {
             Logger.i('Project enable jsrouter-register plugin')
             def android = project.extensions.getByType(AppExtension)
             def transform = new RegisterTransform(project)
-            android.registerTransform(transform)
+//            android.registerTransform(transform)
+            project.android.registerTransform(transform)
         }
     }
 }
