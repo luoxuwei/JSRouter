@@ -18,6 +18,10 @@ class ScanUtils {
         return !path.contains("com.android.support") && !path.contains("/android/m2repository")
     }
 
+    public static boolean shouldProcessClass(String name) {
+        return name != null && name.startsWith(Consts.ROUTER_CLASS_PACKAGE_NAME)
+    }
+
     public static void scanJar(File src, File dest) {
         if (src) {
             JarFile jarFile = new JarFile(src)
@@ -33,6 +37,10 @@ class ScanUtils {
                 }
             }
         }
+    }
+
+    public static void scanClass(File file) {
+        scanClass(new FileInputStream(file))
     }
 
     public static void scanClass(InputStream inputStream) {

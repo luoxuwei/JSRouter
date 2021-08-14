@@ -18,5 +18,6 @@ class MainActivity : AppCompatActivity() {
 //        JSRouter.getInstance().navigation("MyRoute").onCall(this, null)
 //        JSRouter.getInstance().navigation("xxx").onCall(this, null)
         JSRouter.getInstance().navigation("MyRoute2").onCall(this, null)
+        JSRouter.getInstance().navigation("TestToute").onCall(this, null)
     }
 }

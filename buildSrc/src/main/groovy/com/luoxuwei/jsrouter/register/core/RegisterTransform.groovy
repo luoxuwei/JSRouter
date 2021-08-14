@@ -53,11 +53,31 @@ class RegisterTransform extends Transform {
                    , boolean isIncremental) throws IOException, TransformException, InterruptedException {
 
         Logger.i('Start scan')
+
+        boolean leftSlash = File.separator == '/'
+
         //先扫描所有class，找出生成的IRouteRoot类，这里不做任何修改，直接copy到输出
         inputs.forEach { input ->
-//            input.directoryInputs.forEach(file ->
-//
-//            )
+            input.directoryInputs.forEach { directoryInput ->
+                File dest = outputProvider.getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
+                String root = directoryInput.file.absolutePath
+                if (!root.endsWith(File.separator)) {
+                    root += File.separator
+                }
+
+                directoryInput.file.eachFileRecurse {
+                    def path = it.absolutePath.replace(root, '')
+                    if (!leftSlash) {
+                        path.replaceAll("\\\\", '/')
+                    }
+
+                    if (it.isFile() && ScanUtils.shouldProcessClass(path)) {
+                        ScanUtils.scanClass(it)
+                    }
+                }
+
+                FileUtils.copyDirectory(directoryInput.file, dest)
+            }
 
             input.jarInputs.forEach { jar ->
                 String destName = jar.name
