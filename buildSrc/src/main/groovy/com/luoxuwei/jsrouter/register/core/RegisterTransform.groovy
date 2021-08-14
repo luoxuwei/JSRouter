@@ -104,5 +104,17 @@ class RegisterTransform extends Transform {
         Logger.i(classList.toString())
         Logger.i("scan JSRouter class result")
         Logger.i(fileContainsInitClass.toString())
+
+        if (fileContainsInitClass) {
+            if (classList.isEmpty()) {
+                Logger.e("No class implements found for " + Consts.GENERATE_TO_CLASS_FILE_NAME)
+            } else {
+                classList.each {
+                    Logger.i(it)
+                }
+                RegisterCodeGenerator.insertInitCodeTo(fileContainsInitClass, classList)
+            }
+
+        }
     }
 }

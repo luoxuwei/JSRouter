@@ -28,31 +28,35 @@ public class JSRouter {
     static Map<String, Class<?>> routes = new HashMap<>();
     private volatile static JSRouter instance = null;
     private volatile static boolean hasInit = false;
-
+    private static boolean registerByPlugin;
     public static void init(Application application) {
         if (hasInit) return;
 
         try {
             long startInit = System.currentTimeMillis();
-            Set<String> routerMap = null;
-            if (PackageUtils.isNewVersion(application)) {
-                routerMap = ClassUtils.getClassByPackageName(application.getApplicationContext(), Consts.ROUTE_ROOT_PAKCAGE);
-
-
-                if (!routerMap.isEmpty()) {
-                    application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).edit().putStringSet(Consts.JSOUTER_SP_KEY_MAP, routerMap).apply();
-                }
-                PackageUtils.updateVersion(application);
+            if (registerByPlugin) {
+                Logger.info("Load router map by plugin.");
             } else {
-                Logger.info("Load router map from cache.");
-                routerMap = new HashSet<>(application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).getStringSet(Consts.JSOUTER_SP_KEY_MAP, new HashSet<>()));
-            }
-            Logger.info("Find router map finished, map size = " + routerMap.size() + ", cost " + (System.currentTimeMillis() - startInit) + " ms.");
-            startInit = System.currentTimeMillis();
-            for (String className : routerMap) {
-                if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
-                    IRouteRoot routeGroup = (IRouteRoot) Class.forName(className).getConstructor().newInstance();
-                    routeGroup.loadInto(groupsIndex, pathIndex);
+                Set<String> routerMap = null;
+                if (PackageUtils.isNewVersion(application)) {
+                    routerMap = ClassUtils.getClassByPackageName(application.getApplicationContext(), Consts.ROUTE_ROOT_PAKCAGE);
+
+
+                    if (!routerMap.isEmpty()) {
+                        application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).edit().putStringSet(Consts.JSOUTER_SP_KEY_MAP, routerMap).apply();
+                    }
+                    PackageUtils.updateVersion(application);
+                } else {
+                    Logger.info("Load router map from cache.");
+                    routerMap = new HashSet<>(application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).getStringSet(Consts.JSOUTER_SP_KEY_MAP, new HashSet<>()));
+                }
+                Logger.info("Find router map finished, map size = " + routerMap.size() + ", cost " + (System.currentTimeMillis() - startInit) + " ms.");
+                startInit = System.currentTimeMillis();
+                for (String className : routerMap) {
+                    if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
+                        IRouteRoot routeGroup = (IRouteRoot) Class.forName(className).getConstructor().newInstance();
+                        routeGroup.loadInto(groupsIndex, pathIndex);
+                    }
                 }
             }
             hasInit = true;
@@ -63,6 +67,26 @@ public class JSRouter {
         } catch (Exception e) {
             throw new RuntimeException("JSRouter init exception! [" + e.getMessage() + "]");
         }
+    }
+
+    private static void loadRouterByPlugin() {
+        registerByPlugin = false;
+    }
+
+    private static void loadRouter(String className) {
+        if (!TextUtils.isEmpty(className)) {
+            try {
+                Class<?> clazz = Class.forName(className);
+                IRouteRoot routeRoot = (IRouteRoot) clazz.getConstructor().newInstance();
+                routeRoot.loadInto(groupsIndex, pathIndex);
+                if (!registerByPlugin) {
+                    registerByPlugin = true;
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
     }
 
     public BaseJavaScriptInterface navigation(String path) {
