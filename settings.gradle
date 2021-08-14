@@ -3,4 +3,5 @@ include ':app'
 include ':jsrouter-annotation'
 include ':jsrouter-api'
 include ':jsrouter-compiler'
-include ':jsrouter-gradle-plugin'
+
+include ':module-test'

@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion buildVersions.compileSdk
+
+    defaultConfig {
+        minSdkVersion buildVersions.minSdk
+        targetSdkVersion buildVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [JSROUTER_MODULE_NAME : project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility buildVersions.sourceCompatibility
+        targetCompatibility buildVersions.targetCompatibility
+    }
+}
+
+dependencies {
+
+    implementation project(":jsrouter-api")
+    annotationProcessor project(":jsrouter-compiler")
+}
