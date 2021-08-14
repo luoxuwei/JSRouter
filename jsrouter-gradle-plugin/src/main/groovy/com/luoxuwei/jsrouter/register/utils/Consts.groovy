@@ -7,5 +7,7 @@ package com.luoxuwei.jsrouter.register.utils
 class Consts {
     static final String PLUGIN_NAME = "com.luoxuwei.jsrouter"
     static final String LOG_PREFIX = "JSRouter::Register >>> "
+    static final INTERFACE_PACKAGE_NAME = 'com/luoxuwei/jsrouter/template/'
+    static final INTERFACEE_NAME = INTERFACE_PACKAGE_NAME + 'IRouteRoot'
 
 }

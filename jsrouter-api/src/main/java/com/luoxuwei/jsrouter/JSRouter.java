@@ -61,7 +61,7 @@ public class JSRouter {
                 Logger.error("No mapping files were found, check your configuration please!");
             }
         } catch (Exception e) {
-            throw new RuntimeException("JSRouter init logistics center exception! [" + e.getMessage() + "]");
+            throw new RuntimeException("JSRouter init exception! [" + e.getMessage() + "]");
         }
     }
 
