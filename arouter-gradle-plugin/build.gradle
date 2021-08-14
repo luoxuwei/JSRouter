@@ -1,0 +1,13 @@
+plugins {
+    id 'groovy'
+}
+
+sourceCompatibility = buildVersions.sourceCompatibility
+targetCompatibility = buildVersions.targetCompatibility
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.android.plugin
+    implementation gradleApi()
+    implementation localGroovy()
+}
