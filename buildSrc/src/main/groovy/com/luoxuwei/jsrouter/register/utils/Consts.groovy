@@ -14,6 +14,9 @@ class Consts {
      * The register code is generated into this class
      */
     static final String GENERATE_TO_CLASS_NAME = 'com/luoxuwei/jsrouter/JSRouter'
+    static final String GENERATE_TO_METHOD_NAME = 'loadRouterByPlugin'
+    static final String REGISTER_METHOD_NAME = 'loadRouter'
+
     /**
      * you know. this is the class file(or entry in jar file) name
      */

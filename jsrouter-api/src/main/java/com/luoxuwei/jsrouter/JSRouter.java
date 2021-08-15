@@ -34,6 +34,7 @@ public class JSRouter {
 
         try {
             long startInit = System.currentTimeMillis();
+            loadRouterByPlugin();
             if (registerByPlugin) {
                 Logger.info("Load router map by plugin.");
             } else {
@@ -69,6 +70,8 @@ public class JSRouter {
         }
     }
 
+    //gradle 插件会在这个方法中插入加载路由组的代码
+    //loadRouter("com.luoxuwei.jsrouter.routes.IRoute$$Root&&app")
     private static void loadRouterByPlugin() {
         registerByPlugin = false;
     }

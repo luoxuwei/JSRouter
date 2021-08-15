@@ -2,11 +2,17 @@ package com.luoxuwei.jsrouter.register.core
 
 import com.luoxuwei.jsrouter.register.utils.Consts
 import org.apache.commons.io.IOUtils
+import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
 
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
+import com.luoxuwei.jsrouter.register.utils.Logger
 
 /**
  * Created by 罗旭维 on 2021/8/15.
@@ -59,6 +65,52 @@ class RegisterCodeGenerator {
     }
 
     private byte[] referHackWhenInit(InputStream inputStream) {
+        ClassReader cr = new ClassReader(inputStream)
+        ClassWriter cw = new ClassWriter(cr, 0)
+        MyClassVisitor cv = new MyClassVisitor(cw)
+        cr.accept(cv, ClassReader.EXPAND_FRAMES)
+        return cw.toByteArray()
+    }
 
+    class MyClassVisitor extends ClassVisitor {
+
+        MyClassVisitor(ClassVisitor cv) {
+            super(Opcodes.ASM7, cv)
+        }
+
+        @Override
+        MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+            MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions)
+            //在com.luoxuwei.jsrouter.JSRouter.loadRouterByPlugin方法中注入加载路由组root类的代码
+            if (name == Consts.GENERATE_TO_METHOD_NAME) {
+                mv = new RouteMethodVisitor(mv)
+            }
+            return mv
+        }
+    }
+
+    class RouteMethodVisitor extends MethodVisitor {
+
+        RouteMethodVisitor(MethodVisitor mv) {
+            super(Opcodes.ASM7, mv)
+        }
+
+        @Override
+        void visitInsn(int opcode) {
+            //在return之前插入加载代码
+            if (opcode >= Opcodes.IRETURN && opcode <= Opcodes.RETURN) {
+                classList.each {
+                    it = it.replaceAll("/", ".")
+                    //调用loadRouter加载root类
+                    mv.visitLdcInsn(it)
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+                            Consts.GENERATE_TO_CLASS_NAME,
+                            Consts.REGISTER_METHOD_NAME,
+                            "(Ljava/lang/String;)V",
+                            false)
+                }
+            }
+            super.visitInsn(opcode)
+        }
     }
 }
