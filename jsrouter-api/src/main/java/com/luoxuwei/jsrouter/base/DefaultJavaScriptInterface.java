@@ -3,6 +3,8 @@ package com.luoxuwei.jsrouter.base;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.luoxuwei.jsrouter.utils.ReturnCallback;
+
 import org.json.JSONObject;
 
 /**
@@ -10,7 +12,7 @@ import org.json.JSONObject;
  */
 public class DefaultJavaScriptInterface extends BaseJavaScriptInterface {
     @Override
-    public void onCall(Activity activity, JSONObject param) {
+    public void onCall(Activity activity, JSONObject param, ReturnCallback returnCallback) {
         Toast.makeText(activity, "DefaultJavaScriptInterface", Toast.LENGTH_SHORT).show();
     }
 }

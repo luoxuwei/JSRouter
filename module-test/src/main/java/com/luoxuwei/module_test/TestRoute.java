@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.luoxuwei.jsrouter.annotation.JSRoute;
 import com.luoxuwei.jsrouter.base.BaseJavaScriptInterface;
+import com.luoxuwei.jsrouter.utils.ReturnCallback;
 
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ import org.json.JSONObject;
 @JSRoute(path = "TestToute")
 public class TestRoute extends BaseJavaScriptInterface {
     @Override
-    public void onCall(Activity activity, JSONObject param) {
+    public void onCall(Activity activity, JSONObject param, ReturnCallback returnCallback) {
         Toast.makeText(activity, "TestRoute", Toast.LENGTH_SHORT).show();
     }
 }

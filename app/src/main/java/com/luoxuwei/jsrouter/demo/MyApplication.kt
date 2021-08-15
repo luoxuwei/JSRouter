@@ -9,5 +9,6 @@ import com.luoxuwei.jsrouter.JSRouter
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        JSRouter.init(this)
     }
 }
