@@ -19,3 +19,5 @@ dependencies {
     implementation deps.commonsCollections
     implementation deps.fastjson
 }
+
+apply from: rootProject.file('gradle/publish.gradle')

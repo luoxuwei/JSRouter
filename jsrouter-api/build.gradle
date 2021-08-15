@@ -28,3 +28,5 @@ dependencies {
 
     api project(":jsrouter-annotation")
 }
+
+apply from: rootProject.file('gradle/publish.gradle')

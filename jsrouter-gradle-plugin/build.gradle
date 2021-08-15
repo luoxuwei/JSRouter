@@ -27,3 +27,5 @@ dependencies {
     implementation 'org.ow2.asm:asm-tree:7.1'
 
 }
+
+apply from: rootProject.file('gradle/publish.gradle')

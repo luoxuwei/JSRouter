@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath deps.android.plugin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +19,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url  "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
     }
 }
 

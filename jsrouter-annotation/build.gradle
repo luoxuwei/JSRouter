@@ -6,3 +6,5 @@ java {
     sourceCompatibility = buildVersions.sourceCompatibility
     targetCompatibility = buildVersions.targetCompatibility
 }
+
+apply from: rootProject.file('gradle/publish.gradle')
