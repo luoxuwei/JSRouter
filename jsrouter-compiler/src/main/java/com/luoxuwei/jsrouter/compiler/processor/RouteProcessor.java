@@ -38,8 +38,6 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
-import jdk.internal.jimage.ImageStream;
-
 import static com.luoxuwei.jsrouter.compiler.utils.Consts.*;
 import static javax.lang.model.element.Modifier.PUBLIC;
 

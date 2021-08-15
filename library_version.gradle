@@ -89,6 +89,7 @@ jsrouter.jsrouterCompiler = "io.github.luoxuwei:jsrouter-compiler:$VERSION_NAME"
 jsrouter.jsrouterApi = "io.github.luoxuwei:jsrouter-api:$VERSION_NAME"
 jsrouter.jsrouterAnnotation = "io.github.luoxuwei:jsrouter-annotation:$VERSION_NAME"
 jsrouter.jsrouterRegister = "io.github.luoxuwei:jsrouter-register:$VERSION_NAME"
+deps.jsrouter = jsrouter
 ////////////////
 ext.deps = deps
 ////////////////

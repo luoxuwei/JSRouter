@@ -1,0 +1,18 @@
+def moduleMaven = [:]
+moduleMaven["jsrouter-annotation"]=deps.jsrouter.jsrouterAnnotation
+moduleMaven["jsrouter-api"]=deps.jsrouter.jsrouterApi
+moduleMaven["jsrouter-compiler"]=deps.jsrouter.jsrouterCompiler
+moduleMaven["jsrouter-gradle-plugin"]=deps.jsrouter.jsrouterRegister
+
+ext.moduleMaven = moduleMaven
+
+def internalDependency(Project project, Object name) {
+    println "$name " + moduleMaven[name]
+    if (devJSRouter == '1') {
+        project.project(":$name")
+    } else {
+        moduleMaven[name]
+    }
+}
+ext.internalDependency = this.&internalDependency
+

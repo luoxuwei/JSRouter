@@ -8,7 +8,7 @@ java {
 }
 
 dependencies {
-    implementation project(":jsrouter-annotation")
+    implementation internalDependency(project, "jsrouter-annotation")
 
     annotationProcessor deps.autoService
     compileOnly deps.autoServiceAnnotations
