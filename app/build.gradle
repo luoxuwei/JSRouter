@@ -46,7 +46,7 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.constraint
     implementation deps.support.multidex
-    implementation project(":jsrouter-api")
-    kapt project(":jsrouter-compiler")
+    implementation internalDependency(project, "jsrouter-api")
+    kapt internalDependency(project, "jsrouter-compiler")
     implementation project(":module-test")
 }
