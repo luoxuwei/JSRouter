@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         jsRouterInject = JSRouterInject.Builder(this, webView).setUrl("").build()
 
         webView.loadUrl("file:///android_asset/test.html")
+        jsRouterInject?.injectJs()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -59,13 +60,13 @@ class MainActivity : AppCompatActivity() {
 
     val mWebChromeClient = object: WebChromeClient() {
         override fun onReceivedTitle(view: WebView?, title: String?) {
-            super.onReceivedTitle(view, title)
             jsRouterInject?.injectJs()
+            super.onReceivedTitle(view, title)
         }
 
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
-            super.onProgressChanged(view, newProgress)
             jsRouterInject?.injectJs()
+            super.onProgressChanged(view, newProgress)
         }
     }
 }

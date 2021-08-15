@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.luoxuwei.jsrouter.annotation.JSRouterModuleList;
 import com.luoxuwei.jsrouter.base.BaseJavaScriptInterface;
 import com.luoxuwei.jsrouter.base.DefaultJavaScriptInterface;
 import com.luoxuwei.jsrouter.template.IRouteGroup;
@@ -33,6 +34,11 @@ public class JSRouter {
     private static String[] modules = null; //new String[]{"app", "app1", "moduletest"};
     public static void init(Application application) {
         if (hasInit) return;
+
+        JSRouterModuleList moduleList = application.getClass().getAnnotation(JSRouterModuleList.class);
+        if (moduleList != null) {
+            modules = moduleList.value();
+        }
 
         try {
             long startInit = System.currentTimeMillis();
