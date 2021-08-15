@@ -29,37 +29,45 @@ public class JSRouter {
     private volatile static JSRouter instance = null;
     private volatile static boolean hasInit = false;
     private static boolean registerByPlugin;
+    private static boolean registerByHardcode;
+    private static String[] modules = null; //new String[]{"app", "app1", "moduletest"};
     public static void init(Application application) {
         if (hasInit) return;
 
         try {
             long startInit = System.currentTimeMillis();
-            loadRouterByPlugin();
-            if (registerByPlugin) {
-                Logger.info("Load router map by plugin.");
-            } else {
-                Set<String> routerMap = null;
-                if (PackageUtils.isNewVersion(application)) {
-                    routerMap = ClassUtils.getClassByPackageName(application.getApplicationContext(), Consts.ROUTE_ROOT_PAKCAGE);
-
-
-                    if (!routerMap.isEmpty()) {
-                        application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).edit().putStringSet(Consts.JSOUTER_SP_KEY_MAP, routerMap).apply();
-                    }
-                    PackageUtils.updateVersion(application);
+            loadRouterHardcode();
+            if (!registerByHardcode) {
+                loadRouterByPlugin();
+                if (registerByPlugin) {
+                    Logger.info("Load router map by plugin.");
                 } else {
-                    Logger.info("Load router map from cache.");
-                    routerMap = new HashSet<>(application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).getStringSet(Consts.JSOUTER_SP_KEY_MAP, new HashSet<>()));
-                }
-                Logger.info("Find router map finished, map size = " + routerMap.size() + ", cost " + (System.currentTimeMillis() - startInit) + " ms.");
-                startInit = System.currentTimeMillis();
-                for (String className : routerMap) {
-                    if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
-                        IRouteRoot routeGroup = (IRouteRoot) Class.forName(className).getConstructor().newInstance();
-                        routeGroup.loadInto(groupsIndex, pathIndex);
+                    Set<String> routerMap = null;
+                    if (PackageUtils.isNewVersion(application)) {
+                        routerMap = ClassUtils.getClassByPackageName(application.getApplicationContext(), Consts.ROUTE_ROOT_PAKCAGE);
+
+
+                        if (!routerMap.isEmpty()) {
+                            application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).edit().putStringSet(Consts.JSOUTER_SP_KEY_MAP, routerMap).apply();
+                        }
+                        PackageUtils.updateVersion(application);
+                    } else {
+                        Logger.info("Load router map from cache.");
+                        routerMap = new HashSet<>(application.getSharedPreferences(Consts.JSOUTER_SP_CACHE_KEY, Context.MODE_PRIVATE).getStringSet(Consts.JSOUTER_SP_KEY_MAP, new HashSet<>()));
+                    }
+                    Logger.info("Find router map finished, map size = " + routerMap.size() + ", cost " + (System.currentTimeMillis() - startInit) + " ms.");
+                    startInit = System.currentTimeMillis();
+                    for (String className : routerMap) {
+                        if (className.startsWith(Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT)) {
+                            IRouteRoot routeRoot = (IRouteRoot) Class.forName(className).getConstructor().newInstance();
+                            routeRoot.loadInto(groupsIndex, pathIndex);
+                        }
                     }
                 }
+            } else {
+                Logger.info("Load router map by hardcode.");
             }
+
             hasInit = true;
             Logger.info("Load root element finished, cost " + (System.currentTimeMillis() - startInit) + " ms.");
             if (groupsIndex.size() == 0) {
@@ -67,6 +75,24 @@ public class JSRouter {
             }
         } catch (Exception e) {
             throw new RuntimeException("JSRouter init exception! [" + e.getMessage() + "]");
+        }
+    }
+
+    private static void loadRouterHardcode() {
+        registerByHardcode = false;
+        if (modules != null) {
+            registerByHardcode = true;
+            for (String module : modules) {
+                //com.luoxuwei.jsrouter.routes.JSRouter$$Root$$module
+                String className = Consts.ROUTE_ROOT_PAKCAGE + Consts.DOT + Consts.SDK_NAME + Consts.SEPARATOR + Consts.SUFFIX_ROOT + Consts.SEPARATOR + module;
+                try {
+                    Class<?> clazz = Class.forName(className);
+                    IRouteRoot routeRoot = (IRouteRoot) clazz.getConstructor().newInstance();
+                    routeRoot.loadInto(groupsIndex, pathIndex);
+                } catch (Exception e) {
+
+                }
+            }
         }
     }
 
