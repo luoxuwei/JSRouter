@@ -3,8 +3,11 @@ buildscript {
     apply from: "library_version.gradle"
     repositories {
         mavenLocal()
-        google()
         mavenCentral()
+        google()
+        maven { url  "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
         classpath deps.android.plugin
@@ -19,8 +22,8 @@ apply from: "internal_dep.gradle"
 allprojects {
     repositories {
         mavenLocal()
-        google()
         mavenCentral()
+        google()
         maven { url  "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
         maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }

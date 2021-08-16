@@ -20,6 +20,24 @@ apply plugin: 'signing'
 version = VERSION_NAME
 group = GROUP
 
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+    println "Found secret props file, loading props"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+    }
+} else {
+    println "No props file, loading env vars"
+}
+
 def isReleaseBuild() {
     return VERSION_NAME.contains("SNAPSHOT") == false
 }
@@ -35,11 +53,11 @@ def getSnapshotRepositoryUrl() {
 }
 
 def getRepositoryUsername() {
-    return hasProperty('ossrhUsername') ? ossrhUsername : ""
+    return ossrhUsername
 }
 
 def getRepositoryPassword() {
-    return hasProperty('ossrhPassword') ? ossrhPassword : ""
+    return ossrhPassword
 }
 
 def configurePom(pom) {
