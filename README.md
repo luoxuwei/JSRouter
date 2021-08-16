@@ -33,7 +33,7 @@ override fun onCreate() {
 }
 ```
 
-4.在设计自己的与webview交互的协议，在定义的webview JavaScriptInterface入口方法里通JSRouter路由到具体的方法对应的实现。具体的设计可以参考[DSBridge-Android](https://github.com/wendux/DSBridge-Android)项目。整合JSRouter和Webview的方式可以参考[JSRouterInject.java](https://github.com/luoxuwei/JSRouter/blob/master/jsrouter-api/src/main/java/com/luoxuwei/jsrouter/utils/JSRouterInject.java)
+4.设计自己的与webview交互的协议，在定义的webview JavaScriptInterface入口方法里通JSRouter路由到具体的方法对应的实现。具体的设计可以参考[DSBridge-Android](https://github.com/wendux/DSBridge-Android)项目。整合JSRouter和Webview的方式可以参考[JSRouterInject.java](https://github.com/luoxuwei/JSRouter/blob/master/jsrouter-api/src/main/java/com/luoxuwei/jsrouter/utils/JSRouterInject.java)
 
 # 优化建议
 
@@ -41,7 +41,7 @@ override fun onCreate() {
 
 ```groovy
 //root project build.gradle
-classpath xxxxx
+classpath io.github.luoxuwei:jsrouter-register:1.0.1-SNAPSHOT
 
 //project build.gradle
 plugins {
