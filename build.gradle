@@ -28,6 +28,11 @@ allprojects {
         maven { url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
         maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
     }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
 }
 
 task clean(type: Delete) {

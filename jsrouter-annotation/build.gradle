@@ -7,4 +7,4 @@ java {
     targetCompatibility = buildVersions.targetCompatibility
 }
 
-apply from: rootProject.file('gradle/publish.gradle')
+apply from: rootProject.file('gradle-mvn-push.gradle')

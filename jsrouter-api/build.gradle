@@ -28,4 +28,4 @@ dependencies {
     api internalDependency(project, "jsrouter-annotation")
 }
 
-apply from: rootProject.file('gradle/publish.gradle')
+apply from: rootProject.file('gradle-mvn-push.gradle')

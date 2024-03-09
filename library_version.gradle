@@ -17,6 +17,7 @@ versions.rxjava2                = '2.1.9'
 versions.rxandroid2             = '2.0.2'
 versions.rxlifecycle2           = '2.2.0'
 versions.retrofit               = '2.2.0'
+versions.jsrouter               = '1.0.1'
 
 ext.versions = versions
 
@@ -85,10 +86,10 @@ retrofit.mock    = "com.squareup.retrofit2:retrofit-mock:$versions.retrofit"
 deps.retrofit = retrofit
 
 def jsrouter = [:]
-jsrouter.jsrouterCompiler = "io.github.luoxuwei:jsrouter-compiler:$VERSION_NAME"
-jsrouter.jsrouterApi = "io.github.luoxuwei:jsrouter-api:$VERSION_NAME"
-jsrouter.jsrouterAnnotation = "io.github.luoxuwei:jsrouter-annotation:$VERSION_NAME"
-jsrouter.jsrouterRegister = "io.github.luoxuwei:jsrouter-register:$VERSION_NAME"
+jsrouter.jsrouterCompiler = "io.github.luoxuwei:jsrouter-compiler:$versions.jsrouter"
+jsrouter.jsrouterApi = "io.github.luoxuwei:jsrouter-api:$versions.jsrouter"
+jsrouter.jsrouterAnnotation = "io.github.luoxuwei:jsrouter-annotation:$versions.jsrouter"
+jsrouter.jsrouterRegister = "io.github.luoxuwei:jsrouter-register:$versions.jsrouter"
 deps.jsrouter = jsrouter
 ////////////////
 ext.deps = deps
