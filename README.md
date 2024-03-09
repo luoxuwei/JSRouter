@@ -7,8 +7,8 @@
 1.添加依赖
 
 ```groovy
-implementation project(":jsrouter-api")
-kapt project(":jsrouter-compiler")
+implementation 'io.github.luoxuwei:jsrouter-api:1.0.1-SNAPSHOT'
+kapt 'io.github.luoxuwei:jsrouter-compiler:1.0.1-SNAPSHOT'
 ```
 
 2.实现自己的接口功能：继承BaseJavaScriptInterface，使用@JSRoute注解标注实现类并设置path。接口较多时建议通过设置group来分组，方便按需加载，也可以避免不同模块间path名称冲突。如果设置group必须在path里也带上，格式是/group/path
